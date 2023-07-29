@@ -81,7 +81,8 @@ applicants.getAll = async () => {
   try {
     const allQuery = `
       SELECT *
-      FROM applicants;
+      FROM applicants
+      ORDER BY email ASC;
     `;
 
     const res = await db.query(allQuery);
@@ -95,7 +96,7 @@ applicants.getAll = async () => {
 applicants.updateById = async (id, updateObj) => {
   try {
     if (updateObj.password) {
-      updateObj.password = encryptPass(password);
+      updateObj.password = encryptPass(updateObj.password);
     }
     const existingData = applicants.getById(id);
     const updateData = Object.assign(existingData, updateObj);
@@ -116,7 +117,7 @@ applicants.updateById = async (id, updateObj) => {
 
     const res = await db.query(
       updateQuery,
-      [ first_name, last_name, email, password ]
+      [ first_name, last_name, email, password, id ]
     );
 
     return res.rows[0];
