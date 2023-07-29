@@ -119,14 +119,14 @@ describe('Postgres companies table unit tests', () => {
   });
 
   it('gets records by job_id', async () => {
-    const res = await jobToApplicants.getByJobId(jobToApplicantObj.job_id);
+    const res = await jobToApplicants.getAllByJobId(jobToApplicantObj.job_id);
 
     expect(res).not.toBeInstanceOf(Error);
     expect(res._id).toEqual(id);
   });
 
   it('gets records by applicant_id', async () => {
-    const res = await jobToApplicants.getByApplicantId(jobToApplicantObj.job_id);
+    const res = await jobToApplicants.getAllByApplicantId(jobToApplicantObj.job_id);
 
     expect(res).not.toBeInstanceOf(Error);
     expect(res._id).toEqual(id);

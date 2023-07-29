@@ -109,7 +109,7 @@ describe('Postgres jobs table unit tests', () => {
   });
   
   it('gets all records by experience', async () => {
-    const res = await jobs.getByExperience(jobObj.experience_id);
+    const res = await jobs.getAllByExperienceId(jobObj.experience_id);
     
     expect(res).not.toBeInstanceOf(Error);
     expect(res.length).toEqual(1);
@@ -117,7 +117,7 @@ describe('Postgres jobs table unit tests', () => {
   });
   
   it('gets all records by job type', async () => {
-    const res = await jobs.getByJobType(jobObj.job_type_id);
+    const res = await jobs.getByJobTypeId(jobObj.job_type_id);
     
     expect(res).not.toBeInstanceOf(Error);
     expect(res.length).toEqual(1);
@@ -125,7 +125,7 @@ describe('Postgres jobs table unit tests', () => {
   });
   
   it('gets all records by company', async () => {
-    const res = await jobs.getByJobType(jobObj.company_id);
+    const res = await jobs.getAllByCompanyId(jobObj.company_id);
     
     expect(res).not.toBeInstanceOf(Error);
     expect(res.length).toEqual(1);
