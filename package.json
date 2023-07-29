@@ -11,8 +11,15 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@chakra-ui/react": "^2.8.0",
+		"@emotion/react": "^11.11.1",
+		"@emotion/styled": "^11.11.0",
+		"framer-motion": "^10.15.0",
 		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"react-dom": "^18.2.0",
+		"react-hook-form": "^7.45.2",
+		"react-icons": "^4.10.1",
+		"react-router-dom": "^6.14.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.22.9",
@@ -29,5 +36,11 @@
 		"webpack": "^5.88.2",
 		"webpack-cli": "^5.1.4",
 		"webpack-dev-server": "^4.15.1"
-	}
+	},
+	"bundleDependencies": [
+		"@chakra-ui/react",
+		"@emotion/react",
+		"@emotion/styled",
+		"framer-motion"
+	]
 }
