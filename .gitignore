@@ -17,3 +17,6 @@ dist/
 
 # jest coverage
 coverage/
+
+# secret values
+server/envVars.js
