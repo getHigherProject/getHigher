@@ -1,5 +1,5 @@
 const { jobToApplicants } = require ('../../server/models/jobToApplicantModel');
-const { db } = require('../../server/server');
+const { db } = require('../../server/envVars');
 
 describe('Postgres companies table unit tests', () => {
   // this gets set in the beforeAll

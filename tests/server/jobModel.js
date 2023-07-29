@@ -1,5 +1,5 @@
 const { jobs } = require ('../../server/models/jobModel');
-const { db } = require('../../server/server');
+const { db } = require('../../server/envVars');
 
 describe('Postgres jobs table unit tests', () => {
   // this gets set in the first test

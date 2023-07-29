@@ -1,40 +1,40 @@
 CREATE TABLE companies (
   _id SERIAL PRIMARY KEY,
-  name VARCHAR(80) CHECK (name <> ''),
-  company_email VARCHAR(80) UNIQUE CHECK (company_email <> ''),
+  name VARCHAR(80) NOT NULL CHECK (name <> ''),
+  company_email VARCHAR(80) UNIQUE NOT NULL CHECK (company_email <> ''),
   password VARCHAR(80)
 );
 
 CREATE TABLE job_types (
   _id SERIAL PRIMARY KEY,
-  name VARCHAR(80) UNIQUE CHECK (name <> '')
+  name VARCHAR(80) UNIQUE NOT NULL CHECK (name <> '')
 );
 
 CREATE TABLE experiences (
   _id SERIAL PRIMARY KEY,
-  name VARCHAR(80) UNIQUE CHECK (name <> '')
+  name VARCHAR(80) UNIQUE NOT NULL CHECK (name <> '')
 );
 
 CREATE TABLE jobs (
   _id SERIAL PRIMARY KEY,
-  title VARCHAR(80) CHECK (title <> ''),
+  title VARCHAR(80) NOT NULL CHECK (title <> ''),
   min_salary INTEGER NOT NULL,
   max_salary INTEGER NOT NULL,
-  description VARCHAR(65535) CHECK (description <> ''),
-  application_url VARCHAR(255) CHECK (description <> ''),
+  description VARCHAR(65535) NOT NULL CHECK (description <> ''),
+  application_url VARCHAR(255) NOT NULL CHECK (description <> ''),
   created_on TIMESTAMP DEFAULT NOW(),
   closed BOOLEAN DEFAULT false,
   company_id INTEGER NOT NULL references companies (_id) ON DELETE CASCADE,
   job_type_id INTEGER NOT NULL references job_types (_id),
   experience_id INTEGER NOT NULL references experiences (_id),
-  CHECK (min_salary <= max_salary)
+  NOT NULL CHECK (min_salary <= max_salary)
 );
 
 CREATE TABLE applicants (
   _id SERIAL PRIMARY KEY,
-  email VARCHAR(80) UNIQUE CHECK (email <> ''),
-  password VARCHAR(80) CHECK (password <> ''),
-  first_name VARCHAR(80) CHECK (first_name <> ''),
+  email VARCHAR(80) UNIQUE NOT NULL CHECK (email <> ''),
+  password VARCHAR(80) NOT NULL CHECK (password <> ''),
+  first_name VARCHAR(80) NOT NULL CHECK (first_name <> ''),
   last_name VARCHAR(80)
 );
 

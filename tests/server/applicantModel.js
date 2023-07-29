@@ -47,7 +47,7 @@ describe('Postgres applicants table unit tests', () => {
     const updateObj = Object.assign({}, applicantObj);
     for (const field in applicantObj) {
       updateObj[field] = 'a' + applicantObj[field];
-      const res = await applicants.update(updateObj);
+      const res = await applicants.updateById(id, updateObj);
       
       expect(res).not.toBeInstanceOf(Error);
       expect(res[field]).toEqual(updateObj[field]);
@@ -70,11 +70,12 @@ describe('Postgres applicants table unit tests', () => {
   it('deletes a record', async () => {
     const res = await applicants.deleteById(id);
     const emptyRes = await applicants.getById(id);
+    console.log(emptyRes);
 
     expect(res).not.toBeInstanceOf(Error);
-    expect(res.length).toEqual(1);
+    expect(res).toHaveProperty('_id');
     expect(res._id).toEqual(id);
-    expect(emptyRes.length).toEqual(0);
+    expect(emptyRes).toEqual(undefined);
   });
 
   /*
@@ -82,16 +83,16 @@ describe('Postgres applicants table unit tests', () => {
   */
   it('errors if required fields are missing', async () => {
     const reqFields = [ 'email', 'password', 'first_name' ]
-    for (const field in jobObj) {
+    for (const field in applicantObj) {
       // if the field isn't required, don't test it
       if (!reqFields.includes(field)) {
         continue;
       }
 
-      const invalidObj = Object.assign({}, jobObj);
+      const invalidObj = Object.assign({}, applicantObj);
       delete invalidObj[field];
 
-      const res = await jobs.create(invalidObj);
+      const res = await applicants.create(invalidObj);
       expect(res).toBeInstanceOf(Error);
     }
   });
