@@ -1,5 +1,5 @@
 CREATE TABLE companies (
-  _id SERIAL PRIMARY KEY ON DELETE CASCADE,
+  _id SERIAL PRIMARY KEY,
   name VARCHAR(80) CHECK (name <> ''),
   company_email VARCHAR(80) UNIQUE CHECK (company_email <> ''),
   password VARCHAR(80)
@@ -22,15 +22,16 @@ CREATE TABLE jobs (
   max_salary INTEGER NOT NULL,
   description VARCHAR(65535) CHECK (description <> ''),
   application_url VARCHAR(255) CHECK (description <> ''),
-  created_on TIMESTAMPZ DEFAULT NOW(),
+  created_on TIMESTAMP DEFAULT NOW(),
   closed BOOLEAN DEFAULT false,
-  company_id INTEGER NOT NULL references companies (_id),
+  company_id INTEGER NOT NULL references companies (_id) ON DELETE CASCADE,
   job_type_id INTEGER NOT NULL references job_types (_id),
-  experience_id INTEGER NOT NULL references experiences (_id)
+  experience_id INTEGER NOT NULL references experiences (_id),
+  CHECK (min_salary <= max_salary)
 );
 
 CREATE TABLE applicants (
-  _id SERIAL PRIMARY KEY ON DELETE CASCADE,
+  _id SERIAL PRIMARY KEY,
   email VARCHAR(80) UNIQUE CHECK (email <> ''),
   password VARCHAR(80) CHECK (password <> ''),
   first_name VARCHAR(80) CHECK (first_name <> ''),
@@ -39,6 +40,15 @@ CREATE TABLE applicants (
 
 CREATE TABLE jobs_to_applicants (
   _id SERIAL PRIMARY KEY,
-  job_id INTEGER references jobs (_id),
-  applicant_id INTEGER references applicants (_id)
+  job_id INTEGER references jobs (_id) ON DELETE CASCADE,
+  applicant_id INTEGER references applicants (_id) ON DELETE CASCADE
+  UNIQUE (job_id, applicant_id)
 );
+
+INSERT INTO job_types
+  (name) VALUES
+  ('Full - time'), ('Part - time'), ('Contractor'), ('Temporary'), ('Intern'), ('Volunteer'), ('Other');
+
+INSERT INTO experiences
+  (name) VALUES
+  ('Entry level'), ('Mid level'), ('Senior');
