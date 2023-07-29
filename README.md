@@ -39,6 +39,9 @@ To start the development server and run the application, use the following comma
    npm run dev
    ```
 
+Frontend - http://localhost:8080/
+Server - http://localhost:3000/
+
 ## Build and Deployment
 
 To build the application for production, use:
