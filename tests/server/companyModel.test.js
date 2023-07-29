@@ -70,9 +70,9 @@ describe('Postgres companies table unit tests', () => {
     const emptyRes = await companies.getById(id);
 
     expect(res).not.toBeInstanceOf(Error);
-    expect(res.length).toEqual(1);
+    expect(res).toHaveProperty('_id');
     expect(res._id).toEqual(id);
-    expect(emptyRes.length).toEqual(0);
+    expect(emptyRes).toEqual(undefined);
   });
 
   // at this time, all fields are required

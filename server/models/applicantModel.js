@@ -81,7 +81,8 @@ applicants.getAll = async () => {
   try {
     const allQuery = `
       SELECT *
-      FROM applicants;
+      FROM applicants
+      ORDER BY email ASC;
     `;
 
     const res = await db.query(allQuery);
@@ -116,7 +117,7 @@ applicants.updateById = async (id, updateObj) => {
 
     const res = await db.query(
       updateQuery,
-      [ first_name, last_name, email, password ]
+      [ first_name, last_name, email, password, id ]
     );
 
     return res.rows[0];

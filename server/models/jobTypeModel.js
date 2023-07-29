@@ -6,7 +6,7 @@ experience.getAll = async () => {
   try {
     const queryAll = `
       SELECT *
-      FROM experience
+      FROM job_types
       ORDER BY _id ASC;
     `;
 
