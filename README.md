@@ -1,1 +1,67 @@
-# getHigher
+# Get Higher - Getting Started
+
+Welcome to Get Higher! This is a web application built with React that allows users to [provide a brief description of what your app does here].
+
+## Prerequisites
+
+Before running the application, you need to have the following installed:
+
+- Node.js (https://nodejs.org)
+- npm (comes with Node.js)
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone  https://github.com/getHigherProject/getHigher
+   ```
+
+2. Change to the project directory
+
+   ```bash
+   cd gethigher
+   ```
+
+3. install the dependencies
+
+   ```bash
+   npm install
+   ```
+
+## Usage
+
+To start the development server and run the application, use the following command:
+
+1. run the dev environment
+
+   ```bash
+   npm run dev
+   ```
+
+## Build and Deployment
+
+To build the application for production, use:
+
+- run prod
+
+  ```bash
+  npm run build
+  ```
+
+This will create optimized files in the dist/ directory, which can be deployed to a web server or hosting platform of your choice.
+
+To deploy your application, [provide instructions on how to deploy your specific application, e.g., deploying to a hosting platform or a cloud service].
+
+Contributing
+Contributions are welcome! If you find any issues or have suggestions for improvement, feel free to open an issue or submit a pull request.
+
+Fork the project.
+Create a new branch: git checkout -b my-feature
+Commit your changes: git commit -m 'Add my feature'
+Push to the branch: git push origin my-feature
+Open a pull request.
+License
+This project is licensed under the ISC License.
+
+Enjoy using Get Higher! If you have any questions or need further assistance, please don't hesitate to contact us. Happy coding!
