@@ -53,15 +53,18 @@ This will create optimized files in the dist/ directory, which can be deployed t
 
 To deploy your application, [provide instructions on how to deploy your specific application, e.g., deploying to a hosting platform or a cloud service].
 
-Contributing
+## Contributing
+
 Contributions are welcome! If you find any issues or have suggestions for improvement, feel free to open an issue or submit a pull request.
 
-Fork the project.
-Create a new branch: git checkout -b my-feature
-Commit your changes: git commit -m 'Add my feature'
-Push to the branch: git push origin my-feature
-Open a pull request.
-License
+1. clone the project.
+2. Create a new branch: git checkout -b my-feature
+3. Commit your changes: git commit -m 'Add my feature'
+4. Push to the branch: git push origin my-feature
+5. Open a pull request.
+
+## License
+
 This project is licensed under the ISC License.
 
 Enjoy using Get Higher! If you have any questions or need further assistance, please don't hesitate to contact us. Happy coding!
