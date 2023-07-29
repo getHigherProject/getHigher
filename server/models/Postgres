@@ -1,0 +1,44 @@
+CREATE TABLE companies (
+  _id SERIAL PRIMARY KEY ON DELETE CASCADE,
+  name VARCHAR(80) CHECK (name <> ''),
+  company_email VARCHAR(80) UNIQUE CHECK (company_email <> ''),
+  password VARCHAR(80)
+);
+
+CREATE TABLE job_types (
+  _id SERIAL PRIMARY KEY,
+  name VARCHAR(80) UNIQUE CHECK (name <> '')
+);
+
+CREATE TABLE experiences (
+  _id SERIAL PRIMARY KEY,
+  name VARCHAR(80) UNIQUE CHECK (name <> '')
+);
+
+CREATE TABLE jobs (
+  _id SERIAL PRIMARY KEY,
+  title VARCHAR(80) CHECK (title <> ''),
+  min_salary INTEGER NOT NULL,
+  max_salary INTEGER NOT NULL,
+  description VARCHAR(65535) CHECK (description <> ''),
+  application_url VARCHAR(255) CHECK (description <> ''),
+  created_on TIMESTAMPZ DEFAULT NOW(),
+  closed BOOLEAN DEFAULT false,
+  company_id INTEGER NOT NULL references companies (_id),
+  job_type_id INTEGER NOT NULL references job_types (_id),
+  experience_id INTEGER NOT NULL references experiences (_id)
+);
+
+CREATE TABLE applicants (
+  _id SERIAL PRIMARY KEY ON DELETE CASCADE,
+  email VARCHAR(80) UNIQUE CHECK (email <> ''),
+  password VARCHAR(80) CHECK (password <> ''),
+  first_name VARCHAR(80) CHECK (first_name <> ''),
+  last_name VARCHAR(80)
+);
+
+CREATE TABLE jobs_to_applicants (
+  _id SERIAL PRIMARY KEY,
+  job_id INTEGER references jobs (_id),
+  applicant_id INTEGER references applicants (_id)
+);

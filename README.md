@@ -71,3 +71,5 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 This project is licensed under the ISC License.
 
 Enjoy using Get Higher! If you have any questions or need further assistance, please don't hesitate to contact us. Happy coding!
+
+Our database schema can be found at [Lucidcharts.](https://lucid.app/lucidchart/baf72edd-3c1b-411d-b4fe-584af49617f3/edit?viewport_loc=-2317%2C-2142%2C1672%2C2282%2C0_0&invitationId=inv_b5dccfe1-e2a9-4b52-a399-fcdb3b34ca2e)
