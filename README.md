@@ -57,7 +57,7 @@ To deploy your application, [provide instructions on how to deploy your specific
 
 Contributions are welcome! If you find any issues or have suggestions for improvement, feel free to open an issue or submit a pull request.
 
-1. clone the project.
+1. Clone the project.
 2. Create a new branch: git checkout -b my-feature
 3. Commit your changes: git commit -m 'Add my feature'
 4. Push to the branch: git push origin my-feature
