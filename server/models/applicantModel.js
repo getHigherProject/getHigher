@@ -96,9 +96,9 @@ applicants.getAll = async () => {
 applicants.updateById = async (id, updateObj) => {
   try {
     if (updateObj.password) {
-      updateObj.password = encryptPass(updateObj.password);
+      updateObj.password = await encryptPass(updateObj.password);
     }
-    const existingData = applicants.getById(id);
+    const existingData = await applicants.getById(id);
     const updateData = Object.assign(existingData, updateObj);
     
     const {

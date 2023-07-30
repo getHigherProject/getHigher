@@ -1,8 +1,8 @@
 const { db } = require('../envVars.js');
 
-const experience = {};
+const job_types = {};
 
-experience.getAll = async () => {
+job_types.getAll = async () => {
   try {
     const queryAll = `
       SELECT *
@@ -18,4 +18,4 @@ experience.getAll = async () => {
   }
 }
 
-module.exports = experience;
+module.exports = job_types;

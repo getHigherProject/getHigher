@@ -42,18 +42,6 @@ describe('Postgres applicants table unit tests', () => {
     expect(res._id).toEqual(id);
   });
 
-  // we check updates last so that we can check our getByField tests
-  it('updates a record', async () => {
-    const updateObj = Object.assign({}, applicantObj);
-    for (const field in applicantObj) {
-      updateObj[field] = 'a' + applicantObj[field];
-      const res = await applicants.updateById(id, updateObj);
-      
-      expect(res).not.toBeInstanceOf(Error);
-      expect(res[field]).toEqual(updateObj[field]);
-    }
-  });
-
   it('does not allow duplicate emails', async () => {
     const newObj =  {
       first_name: 'firstname2',
@@ -66,6 +54,18 @@ describe('Postgres applicants table unit tests', () => {
     expect(res).toBeInstanceOf(Error);
   });
   
+  // we check updates last so that we can check our getByField tests
+  it('updates a record', async () => {
+    const updateObj = Object.assign({}, applicantObj);
+    for (const field in applicantObj) {
+      updateObj[field] = 'a' + applicantObj[field];
+      const res = await applicants.updateById(id, updateObj);
+      
+      expect(res).not.toBeInstanceOf(Error);
+      expect(res[field]).toEqual(updateObj[field]);
+    }
+  });
+
   // do this once we no longer need to check our dummy record
   it('deletes a record', async () => {
     const res = await applicants.deleteById(id);

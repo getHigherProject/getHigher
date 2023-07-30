@@ -40,19 +40,7 @@ describe('Postgres companies table unit tests', () => {
     expect(res).not.toBeInstanceOf(Error);
     expect(res._id).toEqual(id);
   });
-
-  // we check updates last so that we can check our getByField tests
-  it('updates a record', async () => {
-    const updateObj = Object.assign({}, companyObj);
-    for (const field in companyObj) {
-      updateObj[field] = 'a' + companyObj[field];
-      const res = await companies.update(updateObj);
-      
-      expect(res).not.toBeInstanceOf(Error);
-      expect(res[field]).toEqual(updateObj[field]);
-    }
-  });
-
+  
   it('does not allow duplicate emails', async () => {
     const newObj = {
       name: 'test Company2',
@@ -60,10 +48,22 @@ describe('Postgres companies table unit tests', () => {
       password: 'abc1232'
     };
     const res = await companies.create(newObj);
-
+    
     expect(res).toBeInstanceOf(Error);
   });
   
+  // we check updates last so that we can check our getByField tests
+  it('updates a record', async () => {
+    const updateObj = Object.assign({}, companyObj);
+    for (const field in companyObj) {
+      updateObj[field] = 'a' + companyObj[field];
+      const res = await companies.updateById(id, updateObj);
+      
+      expect(res).not.toBeInstanceOf(Error);
+      expect(res[field]).toEqual(updateObj[field]);
+    }
+  });
+
   // do this once we no longer need to check our dummy record
   it('deletes a record', async () => {
     const res = await companies.deleteById(id);
@@ -77,9 +77,10 @@ describe('Postgres companies table unit tests', () => {
 
   // at this time, all fields are required
   it('errors if required fields are missing', async () => {
-    for (const key of jobObj) {
-      const invalidObj = Object.assign({}, jobObj);
-      delete invalidObj.key;
+    console.log(companyObj);
+    for (const key in companyObj) {
+      const invalidObj = Object.assign({}, companyObj);
+      delete invalidObj[key];
 
       const res = await companies.create(invalidObj);
       expect(res).toBeInstanceOf(Error);

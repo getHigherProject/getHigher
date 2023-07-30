@@ -28,8 +28,8 @@ companies.create = async (companyObj) => {
 
     const createQuery = `
       INSERT INTO companies
-        ( first_name, last_name, email, password )
-        VALUES ($1, $2, $3, $4)
+        ( name, company_email, password )
+        VALUES ( $1, $2, $3 )
         RETURNING *;
     `;
 
@@ -95,9 +95,9 @@ companies.getAll = async () => {
 companies.updateById = async (id, updateObj) => {
   try {
     if (updateObj.password) {
-      updateObj.password = encryptPass(updateObj.password);
+      updateObj.password = await encryptPass(updateObj.password);
     }
-    const existingData = companies.getById(id);
+    const existingData = await companies.getById(id);
     const updateData = Object.assign(existingData, updateObj);
     
     const {
@@ -139,4 +139,4 @@ companies.deleteById = async (id) => {
   }
 };
 
-module.exports = { applicants: companies };
+module.exports = { companies };
