@@ -30,11 +30,11 @@ jobsToApplicants.create = async (jobToApplicantObj) => {
 jobsToApplicants.getById = async (id) => {
   try {
     const idQuery = `
-      SELECT j.*, a.*
+      SELECT j.*, a.*, jta._id as _id
       FROM jobs_to_applicants jta
-        JOIN jobs j ON j._id=jta.jobs_id
-        JOIN applicants a ON a._id=jta.applicants_id
-      WHERE _id=$1;
+        JOIN jobs j ON j._id=jta.job_id
+        JOIN applicants a ON a._id=jta.applicant_id
+      WHERE jta._id=$1;
     `;
 
     const res = await db.query(idQuery, [ id ]);
@@ -48,12 +48,12 @@ jobsToApplicants.getById = async (id) => {
 jobsToApplicants.getAllByJobId = async (id) => {
   try {
     const jobIdQuery = `
-      SELECT j.*, a.*
+      SELECT j.*, a.*, jta._id as _id
       FROM jobs_to_applicants jta
-        JOIN jobs j ON j._id=jta.jobs_id
-        JOIN applicants a ON a._id=jta.applicants_id
+        JOIN jobs j ON j._id=jta.job_id
+        JOIN applicants a ON a._id=jta.applicant_id
       WHERE j._id=$1
-      ORDER BY title ASC;
+      ORDER BY j.title ASC;
     `;
 
     const res = await db.query(jobIdQuery, [ id ]);
@@ -67,12 +67,12 @@ jobsToApplicants.getAllByJobId = async (id) => {
 jobsToApplicants.getAllByApplicantId = async (id) => {
   try {
     const applicantIdQuery = `
-      SELECT j.*, a.*
+      SELECT j.*, a.*, jta._id as _id
       FROM jobs_to_applicants jta
-        JOIN jobs j ON j._id=jta.jobs_id
-        JOIN applicants a ON a._id=jta.applicants_id
+        JOIN jobs j ON j._id=jta.job_id
+        JOIN applicants a ON a._id=jta.applicant_id
       WHERE a._id=$1
-      ORDER BY title ASC;
+      ORDER BY j.title ASC;
     `;
 
     const res = await db.query(applicantIdQuery, [ id ]);
@@ -86,11 +86,11 @@ jobsToApplicants.getAllByApplicantId = async (id) => {
 jobsToApplicants.getAll = async () => {
   try {
     const allQuery = `
-      SELECT j.*, a.*
+      SELECT j.*, a.*, jta._id as _id
       FROM jobs_to_applicants jta
-        JOIN jobs j ON j._id=jta.jobs_id
-        JOIN applicants a ON a._id=jta.applicants_id
-      ORDER BY _id ASC;
+        JOIN jobs j ON j._id=jta.job_id
+        JOIN applicants a ON a._id=jta.applicant_id
+      ORDER BY j.title ASC;
     `;
 
     const res = await db.query(allQuery);

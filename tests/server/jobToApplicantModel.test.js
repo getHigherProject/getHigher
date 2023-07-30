@@ -1,4 +1,4 @@
-const { jobToApplicants } = require ('../../server/models/jobToApplicantModel');
+const { jobsToApplicants } = require ('../../server/models/jobToApplicantModel');
 const { db } = require('../../server/envVars');
 
 describe('Postgres companies table unit tests', () => {
@@ -82,21 +82,24 @@ describe('Postgres companies table unit tests', () => {
   });
 
   afterAll(async () => {
-    const deleteDummies = `
-      DELETE FROM jobs WHERE _id=$1;
-      DELETE FROM applicants WHERE _id=$2;
-      DELETE FROM companies WHERE _id=$3;
-    `
-    await db.query(
-      deleteDummies,
-      [ jobToApplicantObj.job_id, jobToApplicantObj.applicant_id, company_id ]
-    );
+    const deleteDummies = [
+      [ `DELETE FROM jobs WHERE _id=$1;`, jobToApplicantObj.job_id],
+      [ `DELETE FROM companies WHERE _id=$1;`, company_id],
+      [ `DELETE FROM applicants WHERE _id=$1;`, jobToApplicantObj.applicant_id]
+    ]
+    
+    for (const [ query, replacement ] of deleteDummies) {
+      await db.query(
+        query,
+        [ replacement ]
+      );
+    }
 
-    return;
+    return await db.end();
   });
 
   it('writes to the table', async () => {
-    const res = await jobToApplicants.create(jobToApplicantObj);
+    const res = await jobsToApplicants.create(jobToApplicantObj);
 
     expect(res).not.toBeInstanceOf(Error);
     expect(res).toHaveProperty('_id');
@@ -105,41 +108,41 @@ describe('Postgres companies table unit tests', () => {
   });
   
   it('gets records', async () => {
-    const res = await jobToApplicants.getAll();
+    const res = await jobsToApplicants.getAll();
     
     expect(res).not.toBeInstanceOf(Error);
     expect(res.length).toBeGreaterThan(0);
   });
   
   it('gets a record by id', async () => {
-    const res = await jobToApplicants.getById(id);
+    const res = await jobsToApplicants.getById(id);
     
     expect(res).not.toBeInstanceOf(Error);
     expect(res._id).toEqual(id);
   });
 
   it('gets records by job_id', async () => {
-    const res = await jobToApplicants.getAllByJobId(jobToApplicantObj.job_id);
+    const res = await jobsToApplicants.getAllByJobId(jobToApplicantObj.job_id);
 
     expect(res).not.toBeInstanceOf(Error);
-    expect(res._id).toEqual(id);
+    expect(res.length).toBeGreaterThan(0);
   });
 
   it('gets records by applicant_id', async () => {
-    const res = await jobToApplicants.getAllByApplicantId(jobToApplicantObj.job_id);
+    const res = await jobsToApplicants.getAllByApplicantId(jobToApplicantObj.applicant_id);
 
     expect(res).not.toBeInstanceOf(Error);
-    expect(res._id).toEqual(id);
+    expect(res.length).toBeGreaterThan(0);
   });
   
   // do this once we no longer need to check our dummy record
   it('deletes a record', async () => {
-    const res = await jobToApplicants.deleteById(id);
-    const emptyRes = await jobToApplicants.getById(id);
+    const res = await jobsToApplicants.deleteById(id);
+    const emptyRes = await jobsToApplicants.getById(id);
 
     expect(res).not.toBeInstanceOf(Error);
-    expect(res.length).toEqual(1);
+    expect(res).toHaveProperty('_id');
     expect(res._id).toEqual(id);
-    expect(emptyRes.length).toEqual(0);
+    expect(emptyRes).toEqual(undefined);
   });
 });
