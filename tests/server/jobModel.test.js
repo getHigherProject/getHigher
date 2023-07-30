@@ -14,9 +14,9 @@ describe('Postgres jobs table unit tests', () => {
     max_salary: 500,
     description: 'Test Description',
     application_url: 'http://test.com',
-    experience_id,
-    job_type_id,
-    company_id
+    experience_id: 0,
+    job_type_id: 0,
+    company_id: 0
   }
   beforeAll(async() => {
     const companyObj = {
@@ -72,17 +72,20 @@ describe('Postgres jobs table unit tests', () => {
 
   // clear out the dummy objects from the DB
   afterAll(async () => {
-    const deleteDummies = `
-      DELETE FROM job_types WHERE _id=$1;
-      DELETE FROM experiences WHERE _id=$2;
-      DELETE FROM companies WHERE _id=$3;
-    `
-    await db.query(
-      deleteDummies,
-      [ jobObj.job_type_id, jobObj.experience_id, jobObj.company_id ]
-    );
+    const deleteDummies = [
+      [`DELETE FROM job_types WHERE _id=$1;`, jobObj.job_type_id],
+      [`DELETE FROM experiences WHERE _id=$1;`, jobObj.experience_id],
+      [`DELETE FROM companies WHERE _id=$1;`, jobObj.company_id],
+    ];
+    
+    for (const [query, replacement] of deleteDummies) {
+      const res = await db.query(
+        query,
+        [ replacement ]
+      );
+    }
 
-    return;
+    return await db.end();
   })
 
   it('writes to the table', async () => {
@@ -110,18 +113,18 @@ describe('Postgres jobs table unit tests', () => {
   
   it('gets all records by experience', async () => {
     const res = await jobs.getAllByExperienceId(jobObj.experience_id);
-    
+
     expect(res).not.toBeInstanceOf(Error);
     expect(res.length).toEqual(1);
-    expect(res.experience_id).toEqual(jobObj.experience_id);
+    expect(res[0].experience_id).toEqual(jobObj.experience_id);
   });
   
   it('gets all records by job type', async () => {
-    const res = await jobs.getByJobTypeId(jobObj.job_type_id);
+    const res = await jobs.getAllByJobTypeId(jobObj.job_type_id);
     
     expect(res).not.toBeInstanceOf(Error);
     expect(res.length).toEqual(1);
-    expect(res.job_type_id).toEqual(jobObj.job_type_id);
+    expect(res[0].job_type_id).toEqual(jobObj.job_type_id);
   });
   
   it('gets all records by company', async () => {
@@ -129,14 +132,14 @@ describe('Postgres jobs table unit tests', () => {
     
     expect(res).not.toBeInstanceOf(Error);
     expect(res.length).toEqual(1);
-    expect(res.company_id).toEqual(jobObj.company_id);
+    expect(res[0].company_id).toEqual(jobObj.company_id);
   });
 
   // we check updates last so that we can check our getByField tests
   it('updates a record', async () => {
     const updateObj = Object.assign({}, jobObj);
     for (const field in jobObj) {
-      if (String(field).test(/_id$/)) {
+      if (/_id$/.test(String(field))) {
         // we have to ignore the foreign keys
         continue;
       } else if (typeof jobObj.field === 'string') {
@@ -144,10 +147,10 @@ describe('Postgres jobs table unit tests', () => {
       } else if (typeof jobObj.field === 'number') {
         updateObj[field]++;
       }
-      const res = await db.updateById(id, updateObj);
+      const res = await jobs.updateById(id, updateObj);
 
       expect(res).not.toBeInstanceOf(Error);
-      expect(res[field]).toEqual(updateJob[field]);
+      expect(res[field]).toEqual(updateObj[field]);
     }
   });
   
@@ -157,9 +160,9 @@ describe('Postgres jobs table unit tests', () => {
     const emptyRes = await jobs.getById(id);
 
     expect(res).not.toBeInstanceOf(Error);
-    expect(res.length).toEqual(1);
+    expect(res).toHaveProperty('_id');
     expect(res._id).toEqual(id);
-    expect(emptyRes.length).toEqual(0);
+    expect(emptyRes).toEqual(undefined);
   });
 
   /*

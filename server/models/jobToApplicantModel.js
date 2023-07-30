@@ -116,4 +116,4 @@ jobsToApplicants.deleteById = async (id) => {
   }
 };
 
-module.exports = { applicants: jobsToApplicants };
+module.exports = { jobsToApplicants };

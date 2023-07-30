@@ -98,7 +98,7 @@ applicants.updateById = async (id, updateObj) => {
     if (updateObj.password) {
       updateObj.password = await encryptPass(updateObj.password);
     }
-    const existingData = applicants.getById(id);
+    const existingData = await applicants.getById(id);
     const updateData = Object.assign(existingData, updateObj);
     
     const {

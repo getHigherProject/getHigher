@@ -6,9 +6,9 @@ describe('Postgres companies table unit tests', () => {
   // and the company_id will be used to clean up the DB after testing
   let company_id;
   const jobToApplicantObj = {
-    job_id,
-    applicant_id
-  }
+    job_id: undefined,
+    applicant_id: undefined
+  };
 
   // this gets set in the first test
   let id;
@@ -34,7 +34,7 @@ describe('Postgres companies table unit tests', () => {
       application_url: 'http://test.com',
       experience_id: 1,
       job_type_id: 1,
-      company_id,
+      company_id: undefined,
     }
     const companyObj = {
       name: 'test Company',
