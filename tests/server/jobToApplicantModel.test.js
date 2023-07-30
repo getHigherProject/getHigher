@@ -17,7 +17,7 @@ describe('Postgres companies table unit tests', () => {
     const applicantObj = {
       first_name: 'firstname',
       last_name: 'lastname',
-      email: 'test@email.com',
+      email: 'testjtaapplicant@email.com',
       password: 'abc123'
     };
     // here we use job_type and experience as 1
@@ -38,7 +38,7 @@ describe('Postgres companies table unit tests', () => {
     }
     const companyObj = {
       name: 'test Company',
-      company_email: 'test@email.com',
+      company_email: 'testjtacompany@email.com',
       password: 'abc123'
     };
 

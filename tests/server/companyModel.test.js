@@ -7,7 +7,7 @@ describe('Postgres companies table unit tests', () => {
 
   const companyObj = {
     name: 'test Company',
-    company_email: 'test@email.com',
+    company_email: 'testcompany@email.com',
     password: 'abc123'
   };
 
