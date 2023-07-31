@@ -5,11 +5,13 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 const applicantRouter = require('./routes/applicantRouter');
+const companyRouter = require('./routes/companyRouter');
 
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../client')));
 
-app.use('/api', applicantRouter);
+app.use('/api/applicant', applicantRouter);
+app.use('/api/company', companyRouter);
 
 app.use((req, res) =>
 	res.status(404).send("This is not the page you're looking for...")
