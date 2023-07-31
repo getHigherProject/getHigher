@@ -4,10 +4,12 @@ const path = require('path');
 
 const app = express();
 const PORT = 3000;
-const applicantRouter = require('./routes/applicant');
+const applicantRouter = require('./routes/applicantRouter');
+const jobRouter = require('./routes/jobRouter');
 
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../client')));
+app.use('/api/jobs', jobRouter)
 
 app.use('/api', applicantRouter);
 
