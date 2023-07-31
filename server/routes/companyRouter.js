@@ -1,6 +1,8 @@
 const express = require('express');
 
 const companyController = require('../controller/companyController');
+const cookieController = require('../controller/cookieController'); 
+
 
 const router = express.Router();
 

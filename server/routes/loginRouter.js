@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieController = require('../controller/cookieController');
 
 const router = express.Router();
 
@@ -41,3 +42,14 @@ router.post('/',
       .json(res.locals);
   }
 );
+
+router.post('/',
+  cookieController.setSSIDCookie,
+  (_, res) => {
+    return res
+      .status(200)
+      .json(res.locals);
+  }
+);
+
+module.export = router;
