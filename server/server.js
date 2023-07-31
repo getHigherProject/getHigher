@@ -2,28 +2,28 @@
 const express = require('express');
 const path = require('path');
 
-
 const app = express();
 const PORT = 3000;
+const applicantRouter = require('./routes/applicant');
 
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../client')));
 
-app.use('/', (_, res) => {
-  res
-    .status(404)
-    .send('This page does not exist');
-});
+app.use('/api', applicantRouter);
+
+app.use((req, res) =>
+	res.status(404).send("This is not the page you're looking for...")
+);
 
 app.use((err, _, res, _1) => {
-  const defaultErr = {
-    log: 'Express error handler caught unknown middleware error',
-    status: 500,
-    message: { err: 'Ar error occurred' },
-  };
-  const errObj = Object.assign({}, defaultErr, err);
-  console.log(errObj.log);
-  return res.status(errObj.status).json(errObj.message);
+	const defaultErr = {
+		log: 'Express error handler caught unknown middleware error',
+		status: 500,
+		message: { err: 'An error occurred' },
+	};
+	const errObj = Object.assign({}, defaultErr, err);
+	console.log(errObj.log);
+	return res.status(errObj.status).json(errObj.message);
 });
 
 app.listen(PORT, () => {
