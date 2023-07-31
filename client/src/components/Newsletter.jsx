@@ -8,9 +8,11 @@ const Newsletter = () => {
 			paddingX="24px"
 			borderRadius="24px"
 			py="22px"
-			bg="gray.300"
+			bg="blue.600"
 			maxW="360px"
+			color="white"
 			alignItems="left"
+			maxH="280px"
 		>
 			<Text fontSize="xl" fontWeight="semibold" marginTop="20px">
 				Get Notified
@@ -18,7 +20,7 @@ const Newsletter = () => {
 			<Text fontSize="16px">
 				Be the first to apply. Receive an email whenever similar jobs are posted
 			</Text>
-			<Input placeholder="Enter your email address" size="lg" />
+			<Input bg="white" placeholder="Enter your email address" size="lg" />
 			<Button width={'100%'} size="lg" colorScheme="gray">
 				Notify Me
 			</Button>
