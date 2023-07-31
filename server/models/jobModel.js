@@ -3,19 +3,19 @@ const { db } = require('../envVars');
 const jobs = {};
 
 jobs.create = async (jobObj) => {
-  try {
-    const {
-      title,
-      min_salary,
-      max_salary,
-      description,
-      application_url,
-      experience_id,
-      job_type_id,
-      company_id,
-    } = jobObj;
+	try {
+		const {
+			title,
+			min_salary,
+			max_salary,
+			description,
+			application_url,
+			experience_id,
+			job_type_id,
+			company_id,
+		} = jobObj;
 
-    const createQuery = `
+		const createQuery = `
       INSERT INTO jobs
         ( title, min_salary, max_salary, description, application_url,
           experience_id, job_type_id, company_id )
@@ -23,21 +23,26 @@ jobs.create = async (jobObj) => {
         RETURNING *;
     `;
 
-    const res = await db.query(
-      createQuery,
-      [ title, min_salary, max_salary, description, application_url,
-        experience_id, job_type_id, company_id ]
-    );
+		const res = await db.query(createQuery, [
+			title,
+			min_salary,
+			max_salary,
+			description,
+			application_url,
+			experience_id,
+			job_type_id,
+			company_id,
+		]);
 
-    return res.rows[0];
-  } catch (err) {
-    return err;
-  }
+		return res.rows[0];
+	} catch (err) {
+		return err;
+	}
 };
 
 jobs.getById = async (id) => {
-  try {
-    const idQuery = `
+	try {
+		const idQuery = `
       SELECT j.*, e.name as experience, jt.name as job_type, c.name as company
       FROM jobs j
         LEFT JOIN experiences e ON e._id=j.experience_id
@@ -46,17 +51,17 @@ jobs.getById = async (id) => {
       WHERE j._id=$1;
     `;
 
-    const res = await db.query(idQuery, [ id ]);
+		const res = await db.query(idQuery, [id]);
 
-    return res.rows[0];
-  } catch (err) {
-    return err;
-  }
+		return res.rows[0];
+	} catch (err) {
+		return err;
+	}
 };
 
 jobs.getAllByExperienceId = async (id) => {
-  try {
-    const experQuery = `
+	try {
+		const experQuery = `
       SELECT j.*, e.name as experience, jt.name as job_type, c.name as company
       FROM jobs j
         LEFT JOIN experiences e ON e._id=j.experience_id
@@ -66,17 +71,17 @@ jobs.getAllByExperienceId = async (id) => {
       ORDER BY j.title ASC;
     `;
 
-    const res = await db.query(experQuery, [ id ]);
+		const res = await db.query(experQuery, [id]);
 
-    return res.rows;
-  } catch (err) {
-    return err;
-  }
+		return res.rows;
+	} catch (err) {
+		return err;
+	}
 };
 
 jobs.getAllByJobTypeId = async (id) => {
-  try {
-    const jobTypeQuery = `
+	try {
+		const jobTypeQuery = `
       SELECT j.*, e.name as experience, jt.name as job_type, c.name as company
       FROM jobs j
         LEFT JOIN experiences e ON e._id=j.experience_id
@@ -86,17 +91,17 @@ jobs.getAllByJobTypeId = async (id) => {
       ORDER BY j.title ASC;
     `;
 
-    const res = await db.query(jobTypeQuery, [ id ]);
+		const res = await db.query(jobTypeQuery, [id]);
 
-    return res.rows;
-  } catch (err) {
-    return err;
-  }
+		return res.rows;
+	} catch (err) {
+		return err;
+	}
 };
 
 jobs.getAllByCompanyId = async (id) => {
-  try {
-    const companyQuery = `
+	try {
+		const companyQuery = `
       SELECT j.*, e.name as experience, jt.name as job_type, c.name as company
       FROM jobs j
         LEFT JOIN experiences e ON e._id=j.experience_id
@@ -106,17 +111,17 @@ jobs.getAllByCompanyId = async (id) => {
       ORDER BY j.title ASC;
     `;
 
-    const res = await db.query(companyQuery, [ id ]);
+		const res = await db.query(companyQuery, [id]);
 
-    return res.rows;
-  } catch (err) {
-    return err;
-  }
-}
+		return res.rows;
+	} catch (err) {
+		return err;
+	}
+};
 
 jobs.getAll = async () => {
-  try {
-    const allQuery = `
+	try {
+		const allQuery = `
       SELECT j.*, e.name as experience, jt.name as job_type, c.name as company
       FROM jobs j
         LEFT JOIN experiences e ON e._id=j.experience_id
@@ -125,32 +130,31 @@ jobs.getAll = async () => {
       ORDER BY j._id ASC;
     `;
 
-    const res = await db.query(allQuery);
+		const res = await db.query(allQuery);
 
-    return res.rows;
-  } catch (err) {
-    return err;
-  }
-}
+		return res.rows;
+	} catch (err) {
+		return err;
+	}
+};
 
 jobs.updateById = async (id, updateObj) => {
-  try {
+	try {
+		const existingData = jobs.getById(id);
+		const updateData = Object.assign(existingData, updateObj);
 
-    const existingData = jobs.getById(id);
-    const updateData = Object.assign(existingData, updateObj);
-    
-    const {
-      title,
-      min_salary,
-      max_salary,
-      description,
-      application_url,
-      closed,
-      job_type_id,
-      experience_id
-    } = updateData;
+		const {
+			title,
+			min_salary,
+			max_salary,
+			description,
+			application_url,
+			closed,
+			job_type_id,
+			experience_id,
+		} = updateData;
 
-    const updateQuery = `
+		const updateQuery = `
       UPDATE jobs
       SET ( title, min_salary, max_salary, description,
         application_url, closed, job_type_id, experience_id ) = 
@@ -159,31 +163,37 @@ jobs.updateById = async (id, updateObj) => {
       RETURNING *;
     `;
 
-    const res = await db.query(
-      updateQuery,
-      [ title, min_salary, max_salary, description,
-        application_url, closed, job_type_id, experience_id, id ]
-    );
+		const res = await db.query(updateQuery, [
+			title,
+			min_salary,
+			max_salary,
+			description,
+			application_url,
+			closed,
+			job_type_id,
+			experience_id,
+			id,
+		]);
 
-    return res.rows[0];
-  } catch (err) {
-    return err;
-  }
+		return res.rows[0];
+	} catch (err) {
+		return err;
+	}
 };
 
 jobs.deleteById = async (id) => {
-  try {
-    const delQuery = `
+	try {
+		const delQuery = `
       DELETE FROM jobs
       WHERE _id=$1
       RETURNING *;
     `;
-    const res = await db.query(delQuery, [ id ]);
+		const res = await db.query(delQuery, [id]);
 
-    return res.rows[0];
-  } catch (err) {
-    return err;
-  }
+		return res.rows[0];
+	} catch (err) {
+		return err;
+	}
 };
 
 module.exports = { jobs };
