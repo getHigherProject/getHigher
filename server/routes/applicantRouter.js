@@ -12,12 +12,12 @@ router.patch('/:id', applicantController.updateApplicant, (req, res) => {
   return res.status(201).json(res.locals.updatedApplicant);
 });
 
-router.get('/:id', applicantController.getApplicant, (req, res) => {
-  return res.status(201).json(res.locals.applicant);
+router.get('/', applicantController.getAllApplicants, (req, res) => {
+  return res.status(201).json(res.locals.allApplicants);
 });
 
-router.get('/', applicantController.getAllApplicants, (req, res) => {
-  return res.status(201).json(res.locals.applicants);
+router.get('/:id', applicantController.getApplicant, (req, res) => {
+  return res.status(201).json(res.locals.applicant);
 });
 
 router.delete('/:id', applicantController.deleteApplicant, (req, res) => {

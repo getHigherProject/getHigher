@@ -58,11 +58,11 @@ applicantController.getApplicant = async (req, res, next) => {
 
 applicantController.getAllApplicants = async (req, res, next) => {
   try {
-    const applicants = await applicants.getAll();
-    res.locals.applicants = applicants;
+    const allApplicants = await applicants.getAll();
+    res.locals.allApplicants = allApplicants;
     return next();
   } catch (error) {
-    console.error('Error getting applicant:', error);
+    console.error('Error getting applicants:', error);
     next(error);
   }
 };
