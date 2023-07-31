@@ -1,12 +1,16 @@
-import React from 'react';
+import Hero from '../components/Hero';
+import JobsContainer from './JobsContainer';
 import NavBar from '../components/NavBar';
+import React from 'react';
 
 const Home = () => {
-  return (
-    <div>
-      <NavBar />
-    </div>
-  );
+	return (
+		<div>
+			<NavBar />
+			<Hero />
+			<JobsContainer />
+		</div>
+	);
 };
 
 export default Home;

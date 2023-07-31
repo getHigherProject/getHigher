@@ -20,7 +20,8 @@ const Job = () => {
 				borderColor="gray.300"
 				padding="32px"
 				borderRadius="24px"
-				maxW="850px"
+				minW="850px"
+				maxW="1000px"
 			>
 				<HStack spacing="24px">
 					<Box>
@@ -30,8 +31,8 @@ const Job = () => {
 							src="https://bit.ly/prosper-baba"
 						/>
 					</Box>
-					<Box minW="650px">
-						<VStack alignItems="left" spacing="12px">
+					<Box w="100%">
+						<VStack alignItems="left" spacing="12px" w="100%">
 							<Box
 								display="flex"
 								alignItems="center"
