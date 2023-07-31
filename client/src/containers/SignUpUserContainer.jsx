@@ -1,19 +1,19 @@
 import {
   Box,
+  Button,
   HStack,
-  Spacer,
   Text,
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  Button,
   Input,
   InputGroup,
   InputRightElement,
+  Heading,
+  Spacer
 } from '@chakra-ui/react';
 import {
   AiOutlineEye,
-  AiOutlineEyeInvisible
+  AiOutlineEyeInvisible,
 } from 'react-icons/ai';
 import {
   IconContext
@@ -22,17 +22,22 @@ import React, {
   useState
 } from 'react';
 import {
-  Form,
   Link,
-  redirect
+  useNavigate
 } from 'react-router-dom';
+import {
+  useForm,
+} from 'react-hook-form';
 
-const SignUpUserContainer = () => {
+export default function SignUpUserContainer() {
+  const { handleSubmit, register } = useForm();
+  const navigate = useNavigate();
+  
   const [input, setInput] = useState('');
   const [show, setShow] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [validUser, setValidUser] = useState(null);
+
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
 
   const handleInputChange = (e) => {
     return setInput(e.target.value);
@@ -42,36 +47,8 @@ const SignUpUserContainer = () => {
     return setShow(!show);
   };
 
-  const validateEmail = (value) => {
-    let error;
-    if (!value) {
-      error = 'An email address is required to log in.'
-    } else if (/^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}$/i.test(value)) {
-      error = 'Please enter a valid email address.'
-    }
-
-    return setEmailError(error);
-  };
-
-  const validatePassword = (value)  => {
-    // doing it this way to allow for expanding errors
-    let error;
-    if (value === '') {
-      error = 'You must include a password'
-    } if (password.value !== confirm.value) {
-      error = 'Your passwords do not match'
-    }
-
-    return setPasswordError(error);
-  };
-
-  const validateUser = async ({ request }) => {
-    const formData = await request.formData();
-    const values = Object.fromEntries(formData);
-    const credentials = {
-      email: values.email,
-      password: values.password
-    };
+  const createUser = async (userData) => {
+    console.log(userData);
   
     // TODO: Link this with the backend
     const res = await fetch('http://localhost:8080/api/applicant/sign-up',
@@ -81,16 +58,17 @@ const SignUpUserContainer = () => {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify(credentials)
+        body: JSON.stringify(userData)
       }
     )
     // we respond with a json object for routing afterwards
     let data = await res.json();
+    console.log(data);
   
     if (res.ok) {
       // this should have conditional logic depending on if the user is
       // a company or an applicant
-      return redirect('/jobs/');
+      return navigate('/jobs/');
     } else {
       return setValidUser(false);
     }
@@ -98,149 +76,133 @@ const SignUpUserContainer = () => {
 
   return (
     <>
-      <Box>
-        <HStack spacing="24px">
-          <Box>
-            <Text>
-              Sign up to getHigher
-            </Text>
-            <Text>
-              Create an account to start posting creative jobs
-            </Text>
-            <Spacer />
-            <Form onSubmit={createUser}>              
-              {allFields ?
-                (
-                  <FormErrorMessage>
-                    Please complete all required fields.
-                  </FormErrorMessage>
-                ) : <></> 
-              }
+      <HStack spacing='24px'>
+        <Box>
+          <Heading fontSize='32px'>
+            Sign up to getHigher
+          </Heading>
+          <Text>
+            Create an account to start applying to creative jobs.
+          </Text> 
+          <form onSubmit={handleSubmit(createUser)}>
+            <HStack spacing='24px'>
               <FormControl isRequired>
                 <FormLabel>
                   First name
                 </FormLabel>
-                {!firstErr ?
-                  (
-                    <></>
-                  ) : (
-                    <FormErrorMessage>
-                      You must include a first name.
-                    </FormErrorMessage>
-                  )
-                }
                 <Input 
-                  type='email'
-                  name='email'
-                  value={input}
+                  type='text'
+                  name='first_name'
+                  defaultValue={input}
                   onChange={handleInputChange}
-                  placeholder='Enter your email'
+                  placeholder='Enter your first name'
                   variant='outline'
                   focusBorderColor='blue'
                   errorBorderColor='crimson'
-                  onBlur={validateEmail}
+                  {...register('first_name', { required: true })} 
                 />
-              </FormControl>
-              <FormControl isRequired>
+              </FormControl>      
+              <FormControl>
                 <FormLabel>
-                  Email address
+                  Last name
                 </FormLabel>
-                {!emailError ?
-                  (
-                    <></>
-                  ) : (
-                    <FormErrorMessage>
-                      You must include an email address to log in.
-                    </FormErrorMessage>
-                  )
-                }
                 <Input 
-                  type='email'
-                  name='email'
-                  value={input}
+                  type='text'
+                  name='last_name'
+                  defaultValue={input}
                   onChange={handleInputChange}
-                  placeholder='Enter your email'
+                  placeholder='Enter your last name'
                   variant='outline'
                   focusBorderColor='blue'
                   errorBorderColor='crimson'
-                  onBlur={validateEmail}
+                  {...register('last_name')} 
                 />
               </FormControl>
-              <FormControl isRequired>
-                <FormLabel>
-                  Password
-                </FormLabel>
-                {!passwordError ?
-                  (
-                    <></>
-                  ) : (
-                    <FormErrorMessage>
-                      You must include a password to log in.
-                    </FormErrorMessage>
-                  )
-                }
-                <InputGroup>
-                  <Input
-                    type={show ? 'text' : 'password'}
-                    name='password'
-                    value={input}
-                    onChange={handleInputChange}
-                    placeholder='Enter your password'
-                    variant='outline'
-                    focusBorderColor='blue'
-                    errorBorderColor='crimson'
-                    onBlur={validatePassword}
-                  />
-                  <InputRightElement>
-                    <Button size='sm' onClick={handleShowPassword}>
-                      {show ?
-                        <IconContext.Provider title='Hide Password'>
-                          <AiOutlineEyeInvisible />
-                        </IconContext.Provider>                      
-                        :
-                        <IconContext.Provider title='Show Password'>
-                          <AiOutlineEye />
-                        </IconContext.Provider>
-                      }
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-                
-              </FormControl>
-
-              <Link to='/forgotPassword'>
-                Forgot password?
-              </Link>
-              <Button
-                colorScheme='blue'
-                type='submit'
-              >
-                Continue
-              </Button>              
-            </Form>
+            </HStack>
+            <FormControl isRequired>
+              <FormLabel>
+                Email
+              </FormLabel>
+              <InputGroup>
+                <Input
+                  type='email'
+                  name='email'
+                  defaultValue={input}
+                  onChange={handleInputChange}
+                  placeholder='Enter your work email address'
+                  variant='outline'
+                  focusBorderColor='blue'
+                  errorBorderColor='crimson'
+                  {...register('email', { required: true })}
+                />
+              </InputGroup>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>
+                Password
+              </FormLabel>
+              <InputGroup>
+                <Input
+                  type={show ? 'text' : 'password'}
+                  name='password'
+                  defaultValue={input}
+                  onChange={handleInputChange}
+                  placeholder='Enter your password'
+                  variant='outline'
+                  focusBorderColor='blue'
+                  errorBorderColor='crimson'
+                  {...register('password', { required: true })}
+                />
+                <InputRightElement>
+                  <Button size='sm' onClick={handleShowPassword}>
+                    {show ?
+                      <IconContext.Provider value='Hide Password' >
+                        <AiOutlineEyeInvisible size='28px' className='icon' />
+                      </IconContext.Provider>                      
+                      :
+                      <IconContext.Provider value='Show Password' >
+                        <AiOutlineEye size='28px' className='icon' />
+                      </IconContext.Provider>
+                    }
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              
+            </FormControl>           
+            <Spacer />
+            <Text>
+              By clicking "Continue", you confirm that you agree with our 
+              <Link to='/terms'>Terms of Service</Link>
+              and <Link to='privacy'> Privacy Policy</Link>
+            </Text>
+            <Spacer /> 
+            <Button
+              colorScheme='blue'
+              type='submit'
+            >
+              Continue
+            </Button>
             <Text>
               Already have an account?
               <Link to='/login'>
-                Log in
+                Sign up
               </Link>
-            </Text>
-          </Box>
+            </Text>                          
+          </form>
+        </Box>
           {/* <Box id='sidebar'>
-            <Text>
-              Reach a large pool of creative
-            </Text>
-            <Text>
-              On getHigher, a wonderful serenity has taken possession of my entire
-              soul, like those sweet morning of spring which filled my childhood.
-            </Text>
-            <Box boxSize="md">
-              <Image src='' alt='Signup' />
-            </Box>
-          </Box> */}
-        </HStack>
-      </Box>
-    </>
+          <Text>
+            Reach a large pool of creative
+          </Text>
+          <Text>
+            On getHigher, a wonderful serenity has taken possession of my entire
+            soul, like those sweet morning of spring which filled my childhood.
+          </Text>
+          <Box boxSize="md">
+            <Image src='' alt='Spaceman' />
+          </Box>
+        </Box> */}      
+      </HStack>
+    </> 
   );
 };
-
-export default SignUpUserContainer;

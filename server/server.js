@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 const applicantRouter = require('./routes/applicantRouter');
-const companyRouter = require('./routes/companyRouterRouter');
+const companyRouter = require('./routes/companyRouter');
 const jobRouter = require('./routes/jobRouter');
 
 app.use(express.json());
