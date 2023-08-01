@@ -89,19 +89,11 @@ export default function LoginContainer() {
 
   return (
     <>
-      <Button
-        onClick={onOpen}
-        leftIcon={<AiOutlinePlus />}
-        colorScheme="messenger"
-        variant="solid"
-      >
-        Log In
-      </Button>
       <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
+        // initialFocusRef={initialRef}
+        // finalFocusRef={finalRef}
+        // isOpen={isOpen}
+        // onClose={onClose}
       >
         <ModalOverlay />
         <ModalContent
@@ -226,7 +218,7 @@ export default function LoginContainer() {
                   On getHigher, a wonderful serenity has taken possession of my entire
                   soul, like those sweet morning of spring which filled my childhood.
                 </Text>
-                <Image src={Spaceman} alt='Spaceman' />
+                <img src={Spaceman} alt='Spaceman' />
               </Box>        
           </HStack>        
         </ModalContent>
