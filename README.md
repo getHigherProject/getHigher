@@ -1,6 +1,6 @@
 # Get Higher - Getting Started
 
-Welcome to Get Higher! This is a web application built with React that allows users to [provide a brief description of what your app does here].
+Welcome to Get Higher! This is a web application built with React that allows users to post jobs
 
 ## Prerequisites
 
