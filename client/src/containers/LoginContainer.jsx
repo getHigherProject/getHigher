@@ -9,6 +9,7 @@ import {
 	FormControl,
 	FormLabel,
 	HStack,
+	Heading,
 	Input,
 	InputGroup,
 	InputRightElement,
@@ -19,6 +20,7 @@ import {
 	ModalFooter,
 	ModalHeader,
 	ModalOverlay,
+	Spacer,
 	Text,
 	useDisclosure,
 } from '@chakra-ui/react';
@@ -26,8 +28,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 
 import { IconContext } from 'react-icons';
-import Space from '../../public/Space.svg';
-import Spaceman from '../../public/Spaceman.svg';
+// import Space from '../../public/Space.png';
+// import Spaceman from '../../public/Spaceman.svg';
 import { useForm } from 'react-hook-form';
 
 export default function LoginContainer() {
@@ -89,9 +91,9 @@ export default function LoginContainer() {
 				onClose={onClose}
 			>
 				<ModalOverlay />
-				<ModalContent minW="750px" padding="32px">
-					<HStack spacing="24px">
-						<Box>
+				<ModalContent minW="1200px" padding="32px">
+					<HStack>
+						<Box w="50%">
 							<ModalCloseButton />
 							<ModalHeader fontSize="32px">Welcome Back</ModalHeader>
 							<Text>Please enter your details to log in to getHigher</Text>
@@ -104,7 +106,7 @@ export default function LoginContainer() {
 									) : (
 										<></>
 									)}
-									<FormControl isRequired>
+									<FormControl isRequired mt={7}>
 										<FormLabel>Email address</FormLabel>
 
 										{!emailError ? (
@@ -126,7 +128,7 @@ export default function LoginContainer() {
 											{...register('email', { required: true })}
 										/>
 									</FormControl>
-									<FormControl isRequired>
+									<FormControl isRequired mt={7}>
 										<FormLabel>Password</FormLabel>
 										{!passwordError ? (
 											<></>
@@ -166,29 +168,43 @@ export default function LoginContainer() {
 										</InputGroup>
 									</FormControl>
 
-									<Link to="/forgotPassword">Forgot password?</Link>
+									<Link to="/forgotPassword" mt={7}>
+										Forgot password?
+									</Link>
 								</ModalBody>
 
-								<ModalFooter>
-									<Button colorScheme="blue" type="submit">
+								<ModalFooter display="flex" flexDirection="column">
+									<Button colorScheme="messenger" type="submit" w="100%">
 										Log In
 									</Button>
-									<Text>
+									<Text mt={7}>
 										Don't have an account?
 										<Link to="/signupuser">Sign up</Link>
 									</Text>
 								</ModalFooter>
 							</form>
 						</Box>
-						<Box id="sidebar">
-							<Space />
-							<Text>Reach a large pool of creative</Text>
+						<Box
+							id="sidebar"
+							bg="blue.900"
+							maxW="500px"
+							h="100%"
+							display="flex"
+							flexDirection="column"
+							alignItems="center"
+							padding="48px"
+							color="white"
+							justifyContent="center"
+							textAlign="center"
+						>
+							<Heading marginBottom="28px">
+								Reach a large pool of creative
+							</Heading>
 							<Text>
 								On getHigher, a wonderful serenity has taken possession of my
 								entire soul, like those sweet morning of spring which filled my
 								childhood.
 							</Text>
-							<img src={Spaceman} alt="Spaceman" />
 						</Box>
 					</HStack>
 				</ModalContent>

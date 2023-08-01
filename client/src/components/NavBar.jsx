@@ -29,7 +29,9 @@ const NavBar = () => {
 				justifyContent={'center'}
 			>
 				<Box p="2">
-					<Heading size="lg">getHighered</Heading>
+					<Link to={'/'}>
+						<Heading size="lg">getHired</Heading>
+					</Link>
 				</Box>
 				<Spacer />
 				{loggedIn ? (
@@ -48,7 +50,7 @@ const NavBar = () => {
 							</Button>
 						</Link> */}
 						<LoginContainer />
-						<Link to={'signupcompany'}>
+						<Link to={'company'}>
 							<Button variant="outline">Post a job</Button>
 						</Link>
 						<Link to={'signupuser'}>

@@ -26,7 +26,7 @@ export default function Sidebar() {
 			justifyContent="space-between"
 		>
 			<Box p="2">
-				<Heading fontSize="24px">getHighered</Heading>
+				<Heading fontSize="24px">getHired</Heading>
 			</Box>
 
 			<Flex p="5%" flexDir="column" w="100%" mb={4}>
