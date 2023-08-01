@@ -33,6 +33,31 @@ const jobStore = create((set) => ({
 			set({ error });
 		}
 	},
+	addJob: async (newJob) => {
+		try {
+			// Make a POST request to add a new job
+			const res = await fetch('http://localhost:8080/api/jobs/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(newJob),
+			});
+
+			if (!res.ok) {
+				throw new Error('Network response was not ok');
+			}
+
+			// Update the jobs state with the new job
+			const addedJob = await res.json();
+			set((state) => ({
+				jobs: [...state.jobs, addedJob],
+				error: null,
+			}));
+		} catch (error) {
+			set({ error });
+		}
+	},
 }));
 
 export default jobStore;

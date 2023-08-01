@@ -7,8 +7,12 @@ import React from 'react';
 const CompanyContainer = () => {
 	return (
 		<Box display="flex">
-			<CompanyNav />
-			<CompanyJobContainer />
+			<Box position="fixed" top="0" left="0" bottom="0">
+				<CompanyNav />
+			</Box>
+			<Box marginLeft="250px" width="100%">
+				<CompanyJobContainer />
+			</Box>
 		</Box>
 	);
 };
