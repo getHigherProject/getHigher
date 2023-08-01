@@ -1,6 +1,8 @@
 const express = require('express');
+
 // const { route } = require('./applicantRouter');
 const loginController = require('../controller/logInController');
+const cookieController = require('../controller/cookieController');
 
 const router = express.Router();
 
@@ -9,3 +11,4 @@ router.post('/', loginController.login, (req, res) => {
 });
 
 module.exports = router;
+
