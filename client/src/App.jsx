@@ -1,24 +1,31 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
 
 import Home from './containers/Home';
 import LoginContainer from './containers/LoginContainer';
+import NavBar from './components/NavBar';
 import NoPage from './components/NoPage';
-import React from 'react';
 import SignUpCompanyContainer from './containers/SignUpCompanyContainer';
 import SignUpUserContainer from './containers/SignUpUserContainer';
+import SingleJob from './components/SingleJob';
+import SingleJobContainer from './containers/SingleJobContainer';
+import { jobStore } from './stores/jobStore';
 
 const App = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<LoginContainer />} />
-        <Route path="/" element={<Home />} />        
-        <Route path="/signupcompany" element={<SignUpCompanyContainer />} />
-        <Route path="/signupuser" element={<SignUpUserContainer />} />
-        <Route path="/*" element={<NoPage />} />      
-      </Routes>
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<NavBar />
+			<Routes>
+				<Route path="/" element={<Home />}></Route>
+				<Route path="/jobs/:id" element={<SingleJobContainer />}></Route>
+
+				<Route path="login" element={<LoginContainer />} />
+				<Route path="signupcompany" element={<SignUpCompanyContainer />} />
+				<Route path="signupuser" element={<SignUpUserContainer />} />
+				<Route path="*" element={<NoPage />} />
+			</Routes>
+		</BrowserRouter>
+	);
 };
 
 export default App;
