@@ -7,11 +7,12 @@ const PORT = 3000;
 const applicantRouter = require('./routes/applicantRouter');
 const companyRouter = require('./routes/companyRouter');
 const jobRouter = require('./routes/jobRouter');
+const loginRouter = require('./routes/loginRouter');
 
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../client')));
 app.use('/api/jobs', jobRouter);
-
+app.use('/api/log-in', loginRouter);
 app.use('/api/applicant', applicantRouter);
 app.use('/api/company', companyRouter);
 

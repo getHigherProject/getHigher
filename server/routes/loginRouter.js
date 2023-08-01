@@ -1,43 +1,14 @@
 const express = require('express');
 
+// const { route } = require('./applicantRouter');
+const loginController = require('../controller/logInController');
+const cookieController = require('../controller/cookieController');
+
 const router = express.Router();
 
-router.put('/company/:id',
-  (_, res) => {
-    return res
-    .status(201)
-    .json(res.locals.company);
-  }
-);
+router.post('/', loginController.login, (req, res) => {
+  return res.status(201).json(res.locals);
+});
 
-router.post('/company/',
-  (_, res) => {
-    return res
-    .status(201)
-    .json(res.locals.company);
-  }
-);
+module.exports = router;
 
-router.post('/applicant/:id',
-  (_, res) => {
-    return res
-      .status(200)
-      .json(res.locals.applicant);
-  }
-);
-
-router.post('/applicant/',
-  (_, res) => {
-    return res
-      .status(200)
-      .json(res.locals.applicant);
-  }
-);
-
-router.post('/',
-  (_, res) => {
-    return res
-      .status(200)
-      .json(res.locals);
-  }
-);
