@@ -1,19 +1,25 @@
 // server/index.js
 const express = require('express');
+const cors = require('cors');
+
 const path = require('path');
 
 const app = express();
 const PORT = 3000;
 const applicantRouter = require('./routes/applicantRouter');
-const companyRouter = require('./routes/companyRouterRouter');
+const companyRouter = require('./routes/companyRouter');
 const jobRouter = require('./routes/jobRouter');
 
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../client')));
-app.use('/api/jobs', jobRouter)
+app.use('/api/jobs', jobRouter);
 
 app.use('/api/applicant', applicantRouter);
 app.use('/api/company', companyRouter);
+
+app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res) =>
 	res.status(404).send("This is not the page you're looking for...")
