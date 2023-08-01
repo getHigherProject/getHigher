@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { Link, Outlet } from 'react-router-dom';
 
+import LoginContainer from '../containers/LoginContainer';
 import React from 'react';
 import { useState } from 'react';
 
@@ -41,11 +42,12 @@ const NavBar = () => {
 					</ButtonGroup>
 				) : (
 					<ButtonGroup gap="2">
-						<Link to={'login'}>
+						{/* <Link to={'login'}>
 							<Button colorScheme="gray" variant="messenger">
 								Log in
 							</Button>
-						</Link>
+						</Link> */}
+						<LoginContainer />
 						<Link to={'signupcompany'}>
 							<Button variant="outline">Post a job</Button>
 						</Link>
