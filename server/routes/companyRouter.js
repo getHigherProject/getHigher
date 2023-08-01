@@ -6,7 +6,7 @@ const cookieController = require('../controller/cookieController');
 
 const router = express.Router();
 
-router.post('/sign-up', companyController.createCompany, (req, res) => {
+router.post('/sign-up', companyController.createCompany, cookieController.setSSIDCookie, (req, res) => {
   return res.status(201).json(res.locals.company);
 });
 
