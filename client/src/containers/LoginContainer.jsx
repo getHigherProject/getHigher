@@ -35,8 +35,8 @@ import {
 import {
   useForm,
 } from 'react-hook-form';
-
-
+import Space from '../../public/Space.svg';
+import Spaceman from '../../public/Spaceman.svg';
 
 export default function LoginContainer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -215,18 +215,19 @@ export default function LoginContainer() {
                 </ModalFooter>                           
               </form>
             </Box>
-              {/* <Box id='sidebar'>
-              <Text>
-                Reach a large pool of creative
-              </Text>
-              <Text>
-                On getHigher, a wonderful serenity has taken possession of my entire
-                soul, like those sweet morning of spring which filled my childhood.
-              </Text>
-              <Box boxSize="md">
-                <Image src='' alt='Spaceman' />
-              </Box>
-            </Box> */}      
+            <Box
+                id='sidebar'
+              >
+                <Space />
+                <Text>
+                  Reach a large pool of creative
+                </Text>
+                <Text>
+                  On getHigher, a wonderful serenity has taken possession of my entire
+                  soul, like those sweet morning of spring which filled my childhood.
+                </Text>
+                <Image src={Spaceman} alt='Spaceman' />
+              </Box>        
           </HStack>        
         </ModalContent>
       </Modal>  

@@ -28,6 +28,8 @@ import {
 import {
   useForm,
 } from 'react-hook-form';
+import Space from '../../public/Space.svg';
+import Rectangle from '../../public/Rectangle.svg';
 
 export default function SignUpUserContainer() {
   const { handleSubmit, register } = useForm();
@@ -190,7 +192,10 @@ export default function SignUpUserContainer() {
             </Text>                          
           </form>
         </Box>
-          {/* <Box id='sidebar'>
+        <Box
+          id='sidebar'
+        >
+          <Space />
           <Text>
             Reach a large pool of creative
           </Text>
@@ -198,10 +203,8 @@ export default function SignUpUserContainer() {
             On getHigher, a wonderful serenity has taken possession of my entire
             soul, like those sweet morning of spring which filled my childhood.
           </Text>
-          <Box boxSize="md">
-            <Image src='' alt='Spaceman' />
-          </Box>
-        </Box> */}      
+          <img src={Rectangle} alt='Spaceman' />
+        </Box>      
       </HStack>
     </> 
   );
