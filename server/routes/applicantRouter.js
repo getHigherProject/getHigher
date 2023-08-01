@@ -1,10 +1,11 @@
 const express = require('express');
 
 const applicantController = require('../controller/applicantController');
+const cookieController = require('../controller/cookieController');
 
 const router = express.Router();
 
-router.post('/sign-up', applicantController.createApplicant, (req, res) => {
+router.post('/sign-up', applicantController.createApplicant, cookieController.setSSIDCookie, (req, res) => {
   return res.status(201).json(res.locals.applicant);
 });
 
@@ -21,7 +22,7 @@ router.get('/:id', applicantController.getApplicant, (req, res) => {
 });
 
 router.delete('/:id', applicantController.deleteApplicant, (req, res) => {
-  return res.status(201).json(res.locals.deletedAapplicant);
+  return res.status(201).json(res.locals.deletedApplicant);
 });
 
 module.exports = router;
