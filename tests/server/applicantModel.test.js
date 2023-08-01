@@ -8,7 +8,7 @@ describe('Postgres applicants table unit tests', () => {
   const applicantObj = {
     first_name: 'firstname',
     last_name: 'lastname',
-    email: 'test@email.com',
+    email: 'testapplicant@email.com',
     password: 'abc123'
   };
 

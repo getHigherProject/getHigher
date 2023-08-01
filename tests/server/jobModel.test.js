@@ -21,7 +21,7 @@ describe('Postgres jobs table unit tests', () => {
   beforeAll(async() => {
     const companyObj = {
       name: 'test Company',
-      company_email: 'test@email.com',
+      company_email: 'testjob@email.com',
       password: 'abc123'
     };
     const experObj = {
